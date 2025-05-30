@@ -7,7 +7,7 @@ export default function Atmosphere() {
 
   async function fetchData() {
     try {
-      const res = await fetch('http://localhost:8000/api/atmosphere', {
+      const res = await fetch('https://aero-toolbox-api.onrender.com/api/atmosphere', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ altitude: parseFloat(altitude) }),
