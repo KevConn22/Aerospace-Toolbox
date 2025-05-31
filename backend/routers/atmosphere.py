@@ -4,22 +4,23 @@ from pydantic import BaseModel
 router = APIRouter()
 
 class AtmosphereRequest(BaseModel):
-    altitude: float
+    altitude: float  # in meters
 
 class AtmosphereResponse(BaseModel):
-    temperature: float
-    pressure: float
-    density: float
-    speed_of_sound: float
+    temperature: float      # Kelvin
+    pressure: float         # Pascals
+    density: float          # kg/m^3
+    speed_of_sound: float   # m/s
 
 @router.post("/atmosphere", response_model=AtmosphereResponse)
 def get_atmosphere(data: AtmosphereRequest):
     h = data.altitude
-    T0 = 288.15
-    P0 = 101325
-    L = 0.0065
-    R = 287.05
-    g = 9.80665
+
+    T0 = 288.15      # Sea level temp in K
+    P0 = 101325      # Sea level pressure in Pa
+    L = 0.0065       # Temperature lapse rate (K/m)
+    R = 287.05       # Specific gas constant for air
+    g = 9.80665      # Gravity (m/s^2)
 
     if h < 0 or h > 11000:
         raise ValueError("This model is valid only between 0 and 11,000 meters.")
